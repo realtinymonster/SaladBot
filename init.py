@@ -60,6 +60,8 @@ while 1:
         print msg
         #print repr(msg)
         msg=string.rstrip(msg)
+    
+    suffix1 = nickname + ": "
 
     if msg.find('PING') != -1:
         s.send('PONG ' + msg.split() [1] + '\r\n')
@@ -77,7 +79,7 @@ while 1:
             f = open("log", "a")
             f.write(msg+"\n")
             f.close()
-cmd = ""
+cmd = suffix1+""
 #########################
     def gen(number):
         if auth() and wordc(number):
@@ -118,52 +120,52 @@ cmd = ""
     if cmd == "!kick" and gen(2):
         irc.kick(chanset, split[1])
 
-    if cmd == "!op" and gen(2):
+    if cmd == "op" and gen(2):
         irc.op(chanset, split[1])
-    elif cmd == "!op" and gen(1):
+    elif cmd == "op" and gen(1):
         irc.op(chanset, nick)
-    if cmd == "!deop" and gen(2):
+    if cmd == "deop" and gen(2):
         irc.deop(chanset, split[1])
-    elif cmd == "!deop" and gen(1):
+    elif cmd == "deop" and gen(1):
         irc.deop(chanset, nick)
 
-    if cmd == "!voice" and gen(2):
+    if cmd == "voice" and gen(2):
         irc.voice(chanset, split[1])
-    if cmd == "!devoice" and gen(2):
+    if cmd == "devoice" and gen(2):
         irc.devoice(chanset, split[1])
 
-    if cmd == "!ban" and gen(2):
+    if cmd == "ban" and gen(2):
         irc.ban(chanset, split[1])
-    if cmd == "!unban" and gen(2):
+    if cmd == "unban" and gen(2):
         irc.unban(chanset, split[1])
 
-    if cmd == "!nick" and gen(2):
+    if cmd == "nick" and gen(2):
         irc.nick(split[1])
 
-    if cmd == "!ping" and gen(1):
+    if cmd == "ping" and gen(1):
         irc.say(target, "PONG!")
 
-    if cmd == "!relay" and gen(3):
+    if cmd == "relay" and gen(3):
         chan1 = split[1]
         chan2 = split[2]
         irc.say(target, "Messages from %s will be relayed to %s" % (chan1, chan2))
     if chan1 != "" and chan2 != "" and target == chan1:
         irc.say(chan2, message)
 
-    if cmd == "!cond" and gen(3):
+    if cmd == "cond" and gen(3):
         word1 = split[1]
         word2 = split[2]
         irc.say(target, "Messages matching %s will be followed with %s" % (word1, word2))
     if word1 != None and word2 != None and cmd == word1:
         irc.say(target, word2)
 
-    if cmd == "!flush" and gen(1):
+    if cmd == "flush" and gen(1):
         chan1 = ""
         chan2 = ""
         word1 = ""
         word2 = ""
         irc.say(target, "Variables flushed")
-    elif cmd == "!reset" and gen(1):
+    elif cmd == "reset" and gen(1):
         public = []
         log = 0
         grant = []
@@ -175,39 +177,39 @@ cmd = ""
         admins = ["markveidemanis"]
         irc.say(target, "Bot has been reset")
         
-    if cmd == "!log" and gen(1) and log == 0:
+    if cmd == "log" and gen(1) and log == 0:
         log = 1
         irc.say(target, "log = 1")
-    elif cmd == "!log" and gen(1) and log == 1:
+    elif cmd == "log" and gen(1) and log == 1:
         log = 0
         irc.say(target, "log = 0")
 
     if cmd == "!add" and gen(3):
         grant.append(split[1]+":"+split[2])
         irc.say(target, "%s can use %s" % (split[1], split[2]))
-    elif cmd == "!del" and gen(3):
+    elif cmd == "del" and gen(3):
         grant.remove(split[1]+":"+split[2])
         irc.say(target, "%s can no longer use %s" % (split[1], split[2]))
 
-    if cmd == "!addmod" and gen(2):
+    if cmd == "addmod" and gen(2):
         admins.append(split[1])
         irc.say(target, "%s added to admins" % split[1])
-    elif cmd == "!delmod" and gen(2) and split[1] in admins:
+    elif cmd == "delmod" and gen(2) and split[1] in admins:
         admins.remove(split[1])
         irc.say(target, "%s removed from admins" % split[1])
 
-    if cmd == "!auth" and wordc(2) and split[1] == adminpass:
+    if cmd == "auth" and wordc(2) and split[1] == adminpass:
         admins.append(nick)
-    if cmd == "!pass" and gen(2):
+    if cmd == "pass" and gen(2):
         adminpass = split[1]
 
-    if cmd == "!pubadd" and gen(2):
+    if cmd == "pubadd" and gen(2):
         public.append(split[1])
         irc.say(target, "%s added as a public command" % split[1])
-    elif cmd == "!pubdel" and gen(2) and split[1] in public:
+    elif cmd == "pubdel" and gen(2) and split[1] in public:
         public.remove(split[1])
         irc.say(target, "%s is no longer a public command" % split[1])
 
-    if cmd == "!quit" and gen(1):
+    if cmd == "quit" and gen(1):
         irc.quit()
         exit()
