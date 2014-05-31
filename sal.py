@@ -1,11 +1,11 @@
 #!/bin/python
 import socket, string, time, random, sys, subprocess
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("irc.freenode.net", 6667))
+s.connect(("insomnia247.nl", 5015))
 nickname = "SaladBot"
 password = "" # Bot's NickServ password goes here
 adminpass = "authpl0x" # Bot's auth password
-channels = ["#moontest","#mtcm","##pingpong"]
+channels = ["#moontest","#mtcm","##pingpong","#main"]
 public = ["!auth","!ninja","#hashtag","!time","!say","PING","PONG",nickname + "!","XD",nickname + ": you suck"]
 log = 1
 grant = []
@@ -28,7 +28,7 @@ class irc(object):
     def part(self, channel):
         s.send("PART %s :OMG, Who turned out the lights!\n" % channel)
     def say(self, target, message):
-        s.send("PRIVMSG %s : %s\n" % (target, message))
+        s.send("PRIVMSG %s :%s\n" % (target, message))
         irc.logger(message)
     def saynick(self, target, message):
         s.send("PRIVMSG %s :" % (target) + nick + ": %s\n" % (message))
